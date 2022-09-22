@@ -1,0 +1,126 @@
+Description: Unvendorize six and yaml
+ Upstream is using an embedded version of six and python-yaml.
+Author: Thomas Goirand <zigo@debian.org>
+Forwarded: no
+Last-Update: 2016-02-17
+
+--- a/invoke/util.py
++++ b/invoke/util.py
+@@ -20,13 +20,9 @@
+ # attribute access, since six.moves does import shenanigans.)
+ try:
+     from .vendor.lexicon import Lexicon  # noqa
+-    from .vendor import six
+-    from .vendor.six.moves import reduce  # noqa
+-
+-    if six.PY3:
+-        from .vendor import yaml3 as yaml  # noqa
+-    else:
+-        from .vendor import yaml2 as yaml  # noqa
++    import six
++    from six.moves import reduce  # noqa
++    import yaml
+ except ImportError:
+     from lexicon import Lexicon  # noqa
+     import six
+--- a/integration/_support/respond_base.py
++++ b/integration/_support/respond_base.py
+@@ -1,6 +1,6 @@
+ import sys
+ 
+-from invoke.vendor.six.moves import input
++from six.moves import input
+ 
+ if input("What's the password?") != "Rosebud":
+     sys.exit(1)
+--- a/integration/_support/respond_both.py
++++ b/integration/_support/respond_both.py
+@@ -1,6 +1,6 @@
+ import sys
+ 
+-from invoke.vendor.six.moves import input
++from six.moves import input
+ 
+ if input("standard out") != "with it":
+     sys.exit(1)
+--- a/integration/_support/respond_fail.py
++++ b/integration/_support/respond_fail.py
+@@ -1,4 +1,4 @@
+-from invoke.vendor.six.moves import input
++from six.moves import input
+ 
+ if input("What's the password?") == "Rosebud":
+     print("You're not Citizen Kane!")
+--- a/integration/_util.py
++++ b/integration/_util.py
+@@ -3,7 +3,7 @@
+ import sys
+ import time
+ 
+-from invoke.vendor.six import wraps
++from six import wraps
+ 
+ from pytest import skip
+ 
+--- a/invoke/context.py
++++ b/invoke/context.py
+@@ -3,7 +3,7 @@
+ from contextlib import contextmanager
+ 
+ try:
+-    from invoke.vendor.six import raise_from, iteritems
++    from six import raise_from, iteritems
+ except ImportError:
+     from six import raise_from, iteritems
+ 
+--- a/tests/_util.py
++++ b/tests/_util.py
+@@ -8,7 +8,7 @@
+     termios = None
+ from contextlib import contextmanager
+ 
+-from invoke.vendor.six import BytesIO, b, wraps
++from six import BytesIO, b, wraps
+ 
+ from mock import patch, Mock
+ from pytest import skip
+--- a/tests/concurrency.py
++++ b/tests/concurrency.py
+@@ -1,4 +1,4 @@
+-from invoke.vendor.six.moves.queue import Queue
++from six.moves.queue import Queue
+ 
+ from invoke.util import ExceptionWrapper, ExceptionHandlingThread as EHThread
+ 
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -3,7 +3,7 @@
+ import sys
+ import termios
+ 
+-from invoke.vendor.six import iteritems
++from six import iteritems
+ import pytest
+ from mock import patch
+ 
+--- a/tests/runners.py
++++ b/tests/runners.py
+@@ -8,7 +8,7 @@
+ from io import BytesIO
+ from itertools import chain, repeat
+ 
+-from invoke.vendor.six import StringIO, b, PY2, iteritems
++from six import StringIO, b, PY2, iteritems
+ 
+ from pytest import raises, skip
+ from pytest_relaxed import trap
+--- a/tests/watchers.py
++++ b/tests/watchers.py
+@@ -1,6 +1,6 @@
+ from threading import Thread, Event
+ 
+-from invoke.vendor.six.moves.queue import Queue, Empty
++from six.moves.queue import Queue, Empty
+ 
+ from invoke import Responder, FailingResponder, ResponseNotAccepted
+ 

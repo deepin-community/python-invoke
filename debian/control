@@ -1,0 +1,54 @@
+Source: python-invoke
+Section: python
+Priority: optional
+Maintainer: Debian OpenStack <team+openstack@tracker.debian.org>
+Uploaders:
+ Thomas Goirand <zigo@debian.org>,
+Build-Depends:
+ debhelper-compat (= 9),
+ dh-python,
+ openstack-pkg-tools (>= 99~),
+ python3-all,
+ python3-setuptools,
+Build-Depends-Indep:
+ python3-alabaster,
+ python3-mock,
+ python3-nose,
+ python3-releases,
+ python3-six,
+ python3-yaml,
+Standards-Version: 4.1.0
+Vcs-Browser: https://salsa.debian.org/openstack-team/python/python-invoke
+Vcs-Git: https://salsa.debian.org/openstack-team/python/python-invoke.git
+Homepage: http://docs.pyinvoke.org
+
+Package: python3-invoke
+Architecture: all
+Depends:
+ python3-pkg-resources,
+ python3-six,
+ python3-yaml,
+ ${misc:Depends},
+ ${python3:Depends},
+Suggests:
+ python-invoke-doc,
+Description: Pythonic task execution - Python 3.x
+ Invoke is a Python (2.6+ and 3.2+) task execution tool and library, drawing
+ inspiration from various sources to arrive at a powerful and clean feature
+ set.
+ .
+ Like Ruby's Rake tool and Invoke's own predecessor Fabric 1.x, it provides a
+ clean, high level API for running shell commands and defining/organizing task
+ functions from a tasks.py file.
+ .
+ From GNU Make, it inherits an emphasis on minimal boilerplate for common
+ patterns and the ability to run multiple tasks in a single invocation.
+ .
+ Following the lead of most Unix CLI applications, it offers a traditional
+ flag-based style of command-line parsing, deriving flag names and value types
+ from task signatures.
+ .
+ Like many of its predecessors, it offers advanced features as well:
+ namespacing, task aliasing, before/after hooks, parallel execution and more.
+ .
+ This package contains the Python 3.x module.
